@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Logistica Mype</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Mype.com.pe</h1>
+    </header>
+
+    <div class="container">
+      <nav>
+        <ul>
+          Principal
+        </ul>
+        <ul>
+          Servicios
+        </ul>
+        <ul>
+          Productos
+        </ul>
+        <ul>
+          Comunidad
+        </ul>
+        <ul>
+          Contactenos
+        </ul>
+      </nav>
+      <main>
+        <div class="box">
+
+          <select id="unidadDropdown" oninput="filterTable()">
+            <option>Todo</option>
+            <option>RRHH</option>
+            <option>Finanzas</option>
+            <option>Logistica</option>
+            <option>Marketing</option>
+          </select>
+
+          <table id="myTable">
+            <tr>
+              <th>DNI</th>
+              <th>Apellido Paterno</th>
+              <th>Nombre</th>
+              <th>Edad</th>
+              <th>Unidad</th>
+            </tr>
+            <!-- header row uses 'th' instead of 'td' -->
+            <% tpersonal.forEach((personal) => { %>
+
+            <tr>
+              <td><%= personal.dni %></td>
+              <td><%= personal.appaterno %></td>
+              <td><%= personal.nombre %></td>
+              <td><%= personal.edad %></td>
+              <td><%= personal.unidad %></td>
+            </tr>
+            <% }) %>
+          </table>
+        </div>
+      </main>
+      <footer>
+        <h4>
+          mype.com.pe - Derechos reservados 2022 <br />
+          😄
+        </h4>
+      </footer>
+    </div>
+  </body>
+
+  <script>
+    function filterTable() {
+      // Variables
+      let dropdown, table, rows, cells, country, filter;
+      dropdown = document.getElementById("unidadDropdown");
+      table = document.getElementById("myTable");
+      rows = table.getElementsByTagName("tr");
+      filter = dropdown.value;
+
+      // Loops through rows and hides those with countries that don't match the filter
+      for (let row of rows) {
+        // `for...of` loops through the NodeList
+        cells = row.getElementsByTagName("td");
+        country = cells[4] || null; // gets the 2nd `td` or nothing
+        // if the filter is set to 'All', or this is the header row, or 2nd `td` text matches filter
+        if (filter === "Todo" || !country || filter === country.textContent) {
+          row.style.display = ""; // shows this row
+        } else {
+          row.style.display = "none"; // hides this row
+        }
+      }
+    }
+  </script>
+</html>
